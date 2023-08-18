@@ -155,3 +155,23 @@ public:
     }
 };
 
+
+//
+ int leftans, rightans;
+    vector<int> crossdepth(TreeNode* rt){
+        if (rt == NULL) {
+            return {0, 0}; // 访问到空节点了，返回0
+        }
+        vector<int> L = crossdepth(rt->left); // 左儿子为根的子树的深度
+        vector<int> R = crossdepth(rt->right); // 右儿子为根的子树的深度
+        leftans = max(leftans,  L[1] + 1); // 计算d_node即L+R+1 并更新ans
+        rightans = max(rightans,  R[0] + 1);
+        return {L[1] + 1, R[0] + 1}; // 返回该节点为根的子树的深度
+    }
+public:
+    int longestZigZag(TreeNode* root) {
+        leftans = 1;
+         rightans = 1;
+        crossdepth(root);
+        return max(leftans,rightans) - 1;
+    }
