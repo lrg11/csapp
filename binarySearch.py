@@ -16,3 +16,18 @@ class Solution:
             return [-1, -1]
         end = low_bound(nums, target + 1) - 1
         return [start, end]
+
+// 153
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        left = -1
+        n = len(nums)
+        right = n - 1
+        while left + 1 < right:
+            mid = (left + right) // 2
+            if nums[mid] <  nums[ - 1]:
+                right = mid
+            else :
+                left = mid
+        return nums[right]
