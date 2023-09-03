@@ -35,3 +35,15 @@ class Solution:
                 return 1
             return (f(x + 1, left - 1) + f(x - 1, left - 1)) % Mod
         return f(startPos, k)
+
+
+# H index
+
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        sorted_citations = reversed(sorted(citations))
+        h = 0
+        for sc in sorted_citations:
+            if sc > h:
+                h +=1
+        return h
