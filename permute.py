@@ -131,3 +131,21 @@ class Solution:
 # 2815
 
 # max pair sum in an array
+
+# 2816
+
+# 51
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        ans = []
+        path = [0]*n 
+        def dfs(r, s):
+            if r == n:
+                ans.append(['.'* col + 'Q' + '.' * (n - col - 1) for col in path])
+            for c in s:
+                if all(r - c !=R - path[R]  and r + c !=R + path[R]  for R in range(r)):
+                    path[r] = c
+                    dfs(r +1 , s -{c})
+        dfs(0, set(range(n)))
+        return ans
