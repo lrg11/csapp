@@ -173,3 +173,15 @@ class Solution:
         #for i in range(1, len(stones) - 2):
          #   ans = max(ans, stones[i+2] - stones[i])
         return ans
+
+class Solution:
+    def minimumReplacement(self, nums: List[int]) -> int:
+        m = nums[-1]
+        ans = 0
+        n = len(nums)
+        for i in range(n - 2, -1, -1):
+            num = nums[i]
+            k = (num - 1) // m
+            ans += k
+            m = num // (k + 1)
+        return ans
