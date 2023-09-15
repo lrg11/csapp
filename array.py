@@ -174,6 +174,7 @@ class Solution:
          #   ans = max(ans, stones[i+2] - stones[i])
         return ans
 
+#2366
 class Solution:
     def minimumReplacement(self, nums: List[int]) -> int:
         m = nums[-1]
@@ -184,4 +185,95 @@ class Solution:
             k = (num - 1) // m
             ans += k
             m = num // (k + 1)
+        return ans
+
+# 2364
+
+class Solution:
+    def countBadPairs(self, nums: List[int]) -> int:
+        n = len(nums)
+        ans = n * (n - 1) // 2
+        cnt = Counter()
+        for i, x in enumerate(nums):
+            ans -= cnt[i - x]
+            cnt[i - x]+=1
+        return ans
+
+# 2363
+
+class Solution:
+    def mergeSimilarItems(self, items1: List[List[int]], items2: List[List[int]]) -> List[List[int]]:
+        cnt = Counter(dict(items1))
+        cnt += dict(items2)
+        return sorted(cnt.items())
+
+# 2848
+class Solution:
+    def numberOfPoints(self, nums: List[List[int]]) -> int:
+        max_end = max(end for _, end in nums)
+        diff = [0] * (max_end + 2)
+        for start, end in nums:
+            diff[start] += 1
+            diff[end + 1] -= 1
+        return sum(s > 0 for s in accumulate(diff))
+
+# 300
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        @cache
+        def dfs(i: int) -> int:
+        
+            res = 1
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    res = max(res, dfs(j) + 1)
+            return res
+
+        return max(dfs(i) for i in range(n))
+            
+# 2739
+class Solution:
+    def distanceTraveled(self, mainTank: int, additionalTank: int) -> int:
+        #return int(10 * (min(mainTank // 5, additionalTank) + mainTank))
+        ans = 0
+        while mainTank >= 5:
+            ans += 5
+            mainTank -= 5
+            if additionalTank > 0:
+                additionalTank -= 1
+                mainTank += 1
+
+        return (ans + mainTank) * 10 
+
+# 2740
+class Solution:
+    def findValueOfPartition(self, nums: List[int]) -> int:
+        nums.sort()
+        n = len(nums)
+        ans = nums[-1] - nums[0]
+        for i in range(1, n):
+            if nums[i] - nums[i - 1] < ans:
+                ans = nums[i] - nums[i - 1]
+        return ans
+
+
+# 46
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        arr = []
+        ans = []
+    
+        def dfs(i: int) ->None:
+            if i == 0:
+                ans.append(arr.copy())
+                return
+            for j in range(n):
+                if (i >> j) & 1:
+                    arr.append(nums[j])
+                    dfs(i ^ (1 << j))
+                    arr.pop()
+        dfs((1 << n) - 1)
         return ans
