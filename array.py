@@ -277,3 +277,48 @@ class Solution:
                     arr.pop()
         dfs((1 << n) - 1)
         return ans
+
+# 2741
+class Solution:
+    def specialPerm(self, nums: List[int]) -> int:
+        ans = 0
+        MOD = 10** 9 +7
+        n = len(nums)
+
+        @cache
+        def dfs(i: int, k:int) -> int:
+            if i == 0:
+                return 1
+            res = 0
+            for j in range(n):
+                if (i >> j) & 1 and (nums[j] % nums[k] == 0 or nums[k] % nums[j] == 0):
+                    res +=   dfs(i ^ (1 << j), j)
+            return res
+        return sum(dfs(((1 << n) - 1) ^(1 << i), i) for i in range(n)) % MOD 
+
+# 2643
+
+class Solution:
+    def rowAndMaximumOnes(self, mat: List[List[int]]) -> List[int]:
+        ans = [0,-inf]
+        for j, row in enumerate(mat):
+            if sum(i == 1 for i in row) > ans[1]:
+                ans[1] = sum(i == 1 for i in row)
+                ans[0] = j
+
+        return ans
+
+# 2644
+
+class Solution:
+    def maxDivScore(self, nums: List[int], divisors: List[int]) -> int:
+        maxd = -inf
+        ans = 0
+        for d in divisors:
+            if sum(n % d == 0 for n in nums) > maxd:
+                maxd = sum(n % d == 0 for n in nums)
+                ans = d
+            elif sum(n % d == 0 for n in nums) == maxd and d < ans:
+                ans = d
+
+        return ans
