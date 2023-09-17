@@ -322,3 +322,42 @@ class Solution:
                 ans = d
 
         return ans
+# 2645
+
+class Solution:
+    def addMinimum(self, word: str) -> int:
+
+        t = 1
+
+        for i in range(1, len(word)):
+            if word[i] <= word[i - 1]:
+                t+= 1
+        return 3* t - len(word)
+
+
+# 2570
+class Solution:
+    def mergeArrays(self, nums1: List[List[int]], nums2: List[List[int]]) -> List[List[int]]:
+        left1 = left2 = 0
+        n1 = len(nums1)
+        n2 = len(nums2)
+        ans =[]
+        while left1 < n1 and left2 < n2:
+            if nums1[left1][0] == nums2[left2][0]:
+                ans.append([nums1[left1][0], nums1[left1][1] + nums2[left2][1]])
+                left1 += 1
+                left2 += 1
+            elif nums1[left1][0] < nums2[left2][0]:
+                ans.append([nums1[left1][0], nums1[left1][1]])
+                left1 += 1
+            else:
+                ans.append([nums2[left2][0], nums2[left2][1]])
+                left2 += 1
+        while left1 < n1:
+            ans.append([nums1[left1][0], nums1[left1][1]])
+            left1 += 1
+        while left2 < n2:
+            ans.append([nums2[left2][0], nums2[left2][1]])
+            left2 += 1
+
+        return ans
