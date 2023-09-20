@@ -55,3 +55,46 @@ if __name__ == "__main__":
 	    		right = mid
 	    print(left)
 
+# huawei
+m, n = map(int, input().split())
+
+gridlist = list(map(int, input().split()))
+
+tx, ty = map(int, input().split())
+
+
+grid = [[0] * n for _ in range(m)]
+
+for i in range(m):
+	grid[i] = gridlist[i*n: (i+1)*n]
+
+sx = 0
+sy = 0
+v = 0
+for i,x in enumerate(gridlist):
+	if x > 0:
+		v = x
+		sx = i // n
+		sy = i % n 
+		break
+
+q = [[sx, sy, v]]
+
+dir = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+tag = 0
+while q:
+	if tag:
+		break
+	tmp = q
+	for x, y, v in tmp:
+		if x == tx and y = ty:
+			print(v)
+			tag = 1
+			break
+		for dx, dy in dir:
+			if x + dx >= 0 and x + dx < m and y + dy >= 0 and y + dy < n and grid[x +dx][y + dy] == 0:
+				grid[x +dx][y + dy]= v - 1
+				q.append([x+dx, y+dy, v - 1])
+
+
+
