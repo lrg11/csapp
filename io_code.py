@@ -98,3 +98,62 @@ while q:
 
 
 
+n = int(input())
+
+nums = list(map(int, input()))
+
+sn = int(input())
+
+start = end = 0
+
+tag = False
+
+start = nums.find(sn)
+end = nums.rfind(sn)
+if start == 0 and end == n - 1:
+	for i, x in enumerate(nums):
+		if x != sn:
+			end = i - 1
+			break
+	for i in range(n - 2, -1, -1):
+		if nums[i] != sn:
+			start = i
+			break
+
+else :
+	print(start, end)
+'''
+for i, x in enumerate(nums):
+	if not tag and i == 0 and x == sn and nums[-1] != sn:
+		tag = True
+		start = i
+	if tag and x != sn:
+		end = i - 1
+		tag = False
+	if not tag and i != 0 and x ==
+'''
+
+k, n = map(int, input().split())
+
+nodes = list(map(int, input().split()))
+
+cnt = 1 
+
+left = 0
+
+def solve(node, shift):
+    res = ""
+    for i in range(len(node)):
+        res += str(node[(i - shift) % len(node)])
+    return res
+    
+
+ans = ""
+
+while left < n:
+    ans += solve(nodes[left:min(left + cnt , n)], k % (cnt if cnt != 0 else k))
+    k *= 2
+    left = left + cnt
+    cnt = 2 * sum(i != -1 for i in nodes[left:left + cnt])
+    
+print(ans)
