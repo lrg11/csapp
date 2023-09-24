@@ -73,3 +73,68 @@ class Solution:
     		if(node.left):
     			d.append(node.left)
     	return node.val
+
+# 416 partition equal subset sum
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        sm = sum(nums)
+        if sm % 2 :
+            return False
+        sm //= 2
+
+        
+        def dfs(i, c):
+            if i < 0:
+                return False if c else True
+            if nums[i] > c:
+                return dfs(i - 1, c)
+            return dfs(i - 1, c) or dfs(i - 1, c - nums[i])
+        return dfs(len(nums) - 1, sm)
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        sm = sum(nums)
+        if sm % 2 :
+            return False
+        sm //= 2
+
+        n = len(nums)
+        f = [[False] * (sm + 1) for _ in  range(n + 1)] 
+        f[0][0] = True
+        for i, x in enumerate(nums):
+            for c in range(sm + 1):
+                if x > c:
+                    f[i + 1][c] = f[i][c] 
+                else :
+                    f[i + 1][c] = f[i][c] or  f[i][c - x] 
+        return f[n][sm]
+        
+# 1262
+class Solution:
+    def maxSumDivThree(self, nums: List[int]) -> int:
+        sm = sum(nums)
+        if sm % 3 == 0:
+            return sm 
+        @cache
+        def dfs(i, j):
+            if i < 0:
+                return -inf if j % 3 else 0
+            return max(dfs(i - 1, j), nums[i] + dfs(i - 1, (j + nums[i]) % 3))
+        return dfs(len(nums) - 1, 0)
+
+# 823 
+class Solution:
+    def numFactoredBinaryTrees(self, arr: List[int]) -> int:
+        arr.sort()
+        idx = {x: i for i, x in enumerate(arr)}
+        @cache
+        def dfs(j):
+            res = 1
+            for i in range(j):
+                x = arr[i]
+                v = arr[j]
+                if v % x == 0 and v//x in idx:
+                    res += dfs(i) * dfs(idx[v//x])
+            return res
+        return sum(dfs(x) for x in range(len(arr))) % (10** 9 + 7)

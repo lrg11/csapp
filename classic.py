@@ -214,4 +214,87 @@ class Solution:
         cur.next = head
         return headnew
 
+# 48 rotate image
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        n = len(matrix)
+        m = (n + 1) // 2
+        for i in range(n// 2):
+            for j in range(m):
+                matrix[i][j], matrix[j][n - 1 -i], matrix[n - 1 - i][n - 1 - j], matrix[n - 1 - j][i] = matrix[n - 1 - j][i], matrix[i][j], matrix[j][n - 1 -i], matrix[n - 1 - i][n - 1 - j]
+        return matrix
+
+# 73
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        m = len(matrix)
+        n = len(matrix[0])
+        row = False
+        col = []
+        for i in range(m):
+            row = False
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    row = True
+                    col.append(j)
+            if row:
+                for j in range(n):
+                    matrix[i][j] = 0
+        for j in col:
+            for i in range(m):
+                matrix[i][j] = 0
+        
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int flag_col0 = false, flag_row0 = false;
+        for (int i = 0; i < m; i++) {
+            if (!matrix[i][0]) {
+                flag_col0 = true;
+            }
+        }
+        for (int j = 0; j < n; j++) {
+            if (!matrix[0][j]) {
+                flag_row0 = true;
+            }
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (!matrix[i][j]) {
+                    matrix[i][0] = matrix[0][j] = 0;
+                }
+            }
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (!matrix[i][0] || !matrix[0][j]) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if (flag_col0) {
+            for (int i = 0; i < m; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        if (flag_row0) {
+            for (int j = 0; j < n; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+    }
+};
+
+
 
