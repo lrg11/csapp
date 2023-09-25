@@ -296,5 +296,36 @@ public:
     }
 };
 
+# 79 word search
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m = len(board)
+        n = len(board[0])
+        dir = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+    
+        def dfs(x, y, cnt, vis):
+            if cnt >= len(word) - 1:
+                return True
+            res = False
+            
+            for dx, dy in dir:
+                if x + dx >= 0 and x + dx < m and y + dy >= 0 and y + dy < n:
+                    if vis[x + dx][y + dy]  == False and board[x + dx][y + dy] == word[cnt + 1]:
+                        vis[x + dx][y + dy] = True
+                        res = res or dfs(x + dx, y + dy, cnt + 1, vis)
+                        vis[x + dx][y + dy] = False
+            return res
+            
+     
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    vis = [[False]*n for _ in range(m)]
+                    vis[i][j] = True
+                
+                    if dfs(i, j, 0, vis):
+                        return True
+        return False
+
 
 

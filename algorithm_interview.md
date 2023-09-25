@@ -10,3 +10,85 @@ lightgbm是在xgboost基础上进一步改进
 这些算法在决策树算法、时间复杂度、决策树生长策略、并行计算、优化目标、正则化和分布式计算等方面存在一些不同。他们之间的选择取决于数据集大小、性能需求。adaboost适用于简单问题，xgboost和lightgbm适用于更复杂和大规模的数据集，gbdt通常是中间选项。​
 
 
+
+> Problem: [148. 排序链表](https://leetcode.cn/problems/sort-list/description/)
+
+  [TOC]
+  
+  # 思路
+  > 看到要求的时间复杂度是$O(nlogn)$, 想到归并排序，最简单做法就是把链表遍历一遍，存入数组，再调用归并排序（Python默认的sorted函数或者列表sort方法都是归并排序？），时间复杂度满足要求，但是空间复杂度是$O(n)$, 不是常数级。再看是链表，只能操作指针进行手动归并排序，可以假设函数已经实现排序功能，从中间截断，赋值为None的操作别忘了，链表前半部分递归调用自身，排好序；后半部分也是，递归调用，相对于二叉树的后序遍历，最后合并两个有序链表操作用$O(n)$时间，常数空间解决
+  
+  # 解题方法
+  > 从中间断开，分成两个链表，递归调用链表前后两半部分，后序遍历，合并两个有序链表的部分放在最后面，最后返回合并后的链表头指针
+  
+  # 复杂度
+  - 时间复杂度: 
+  > $O(nlogn)$
+  
+  - 空间复杂度: 
+  > $O(1)，只操作指针，没有额外数组空间开销
+  
+
+
+  # Code
+  ```Python3 []
+  
+  # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        #nums = []
+        cur = head
+        cnt = 0
+        #slow = head
+        while cur:
+            cur = cur.next
+            #slow = slow.next
+            #nums.append(cur.val)
+            cnt+=1
+        if cnt <= 1:
+            return head
+        half = cnt // 2
+        cur = head
+        for i in range(half - 1):
+            cur = cur.next
+        after = cur.next
+        cur.next = None
+        headnew = self.sortList(head)
+        afternew = self.sortList(after)
+        curfrot = headnew
+        curafter = afternew 
+        res = None
+        cur = None
+        while curfrot and curafter:
+            if curfrot.val > curafter.val:
+                if res == None:
+                    res = curafter
+                    curafter =  curafter.next
+                    cur = res
+
+                else:
+                    cur.next = curafter
+                    cur = cur.next
+                    curafter = curafter.next
+            else:
+                if res == None:
+                    res = curfrot
+                    cur = res
+                    curfrot =  curfrot.next
+                else:
+                    cur.next = curfrot
+                    cur = cur.next
+                    curfrot = curfrot.next
+        if curafter:
+            cur.next = curafter
+        if curfrot:
+            cur.next = curfrot
+        return res
+        
+        
+  ```
+  
