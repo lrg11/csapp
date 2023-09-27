@@ -328,4 +328,38 @@ class Solution:
         return False
 
 
+# 909 snakes and ladders
+
+class Solution:
+    def snakesAndLadders(self, board: List[List[int]]) -> int:
+        n = len(board)
+
+        def id2rowcol(idx):
+            row, col = (idx - 1) // n, (idx-1) % n
+            if row % 2 == 1:
+                col = n - 1 - col 
+            return n - 1 - row, col
+        
+        vis = set()
+        q = [[1, 0]]
+        while q:
+            cur = q
+            q = []
+            for idx, step in cur:
+                for i in range(1, 7):
+                    nxt = idx + i
+                    if nxt > n * n:
+                        break
+                    if nxt == n * n:
+                        return step + 1
+                    r, c = id2rowcol(nxt)
+                    if board[r][c] > 0:
+                        nxt = board[r][c]
+                    if nxt == n * n:
+                        return step + 1
+                    if nxt not in vis:
+                        vis.add(nxt)
+                        q.append([nxt, step + 1])
+
+        return -1
 

@@ -157,3 +157,128 @@ while left < n:
     cnt = 2 * sum(i != -1 for i in nodes[left:left + cnt])
     
 print(ans)
+
+c = int(input())
+
+while c:
+    c -= 1
+    n, m = map(int, input().split())
+    ac = list(map(int, input().split()))
+    bc = list(map(int, input().split()))
+    sbc = set(bc)
+
+    op = input().split(',')
+    if op[0][0] == 'l':
+        if op[1][0] == '=':
+            ac.sort()
+            ans = [[str(i),str(i)] if i in sbc else [str(i), 'null'] for i in ac ]
+            print(len(ans))
+            for a in ans:
+                print(a[0], end= ' ')
+                print(a[1])
+
+import math
+n, m = map(int,input().split())
+a = []
+b = []
+tot = []
+for _ in range(n):
+    ai, bi = map(int,input().split())
+    tot.append([ai, bi])
+    a.append(ai)
+    b.append(bi)
+
+tot.sort()
+
+vis = [False] * n
+record = [[-1] * (m +1) for _  in range(n)]
+def f(i, t):
+    if i < 0 or t <= 0:
+        return 0
+    if record[i][t] != -1:
+        return record[i][t]
+    if vis[i]:
+        record[i][t] =  max(f(i - 1, t), f(i, t - 1) + tot[i][1]) 
+        return record[i][t]
+    else:
+        vis[i] = True
+        #vis[i] = False
+        record[i][t] = max(f(i, t - 1) + tot[i][0], f(i - 1, t))
+        return record[i][t]
+print(f(n - 1, m))
+        
+
+import math
+n, m = map(int,input().split())
+
+tot = []
+for _ in range(n):
+    ti = list(map(int,input().split()))
+    tot.append(ti)
+
+
+
+def dfs(i, ans):
+    if i < 0:
+        return max(ans)
+    res = 100 * n
+    for j in range(m):
+        ans[j] += tot[i][j]
+        res = min(res, max(dfs(i - 1, ans),ans[j]))
+        ans[j] -= tot[i][j]
+    return res
+
+print(dfs(n - 1, [0] * m))
+
+# meituan 3
+n= int(input())
+
+a = list(map(int,input().split()))
+
+maxn = a[0]
+for i in range(n):
+	if a[i] > maxn:
+		maxn = a[i]
+
+if maxn == a[0]:
+	return 0
+
+cnt = 0
+cur = a[0]
+while cur < maxn:
+	cnt += 1
+	cur *= 2
+
+res = 0
+
+while maxn > a[0]:
+	maxn //= 2
+	res += 1
+
+return min(res, cnt)
+
+# aliyun 2 
+a = input()
+
+a+='#'
+
+n = len(a)
+cnt = 1
+res = 0
+t = []
+for i in range(1,n):
+	if a[i - 1] == a[i]:
+		cnt += 1
+	else:
+		res += cnt - min(2, cnt)
+		t.append(min(2, cnt))
+		cnt = 1
+#res += cnt - min(2, cnt)
+#t.append(min(2, cnt))
+
+for i in range(2, len(t)):
+	if t[i - 1] == 2 and t[i - 2] == 2:
+		res += 1
+		t[i - 1] -= 1
+
+print(res)
