@@ -22,3 +22,4 @@ for i in range(2, len(t)):
 		t[i - 1] -= 1
 
 print(res)
+

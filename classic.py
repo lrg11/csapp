@@ -363,3 +363,24 @@ class Solution:
 
         return -1
 
+
+
+class Solution:
+    def snakesAndLadders(self, root: Optional[TreeNode]) -> int:
+        q = [root]
+        cnt = 1
+        ans = 0
+        flag = 0
+        while q:
+            tmp = q
+            q = []
+            if len(tmp) != cnt or flag == 1:
+                flag = 1
+                ans += len(tmp)
+            for cur in tmp:
+                if cur.left:
+                    q.append(cur.left)
+                if cur.right:
+                    q.append(cur.right)
+            cnt *= 2
+        return ans
