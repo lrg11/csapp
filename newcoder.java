@@ -96,3 +96,80 @@ public class Main {
         return longestNumber;  
     }  
 }
+
+import java.util.Scanner;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        
+        int a = in.nextInt();
+        int b = in.nextInt();
+        if (a / 3 < b) {
+            System.out.println(-1);
+            return;
+        }
+        String str1 = "you";  
+        //String str2 = "";  
+        StringBuilder sb = new StringBuilder();  
+        for( int i = 0; i < b; i++)
+            sb.append(str1);
+        for (int i = 0; i < (a - b * 3); i++)  
+        sb.append("o");  
+    
+        String result = sb.toString();
+        System.out.println(result);
+        
+    }
+}
+
+
+ import java.util.Scanner;  
+ 
+  
+   // 注意类名必须为 Main, 不要有任何 package xxx 信息  
+  
+   public class Main {  
+  
+       public static void main(String[] args) {  
+  
+           Scanner in = new Scanner(System.in);  
+  
+             
+  
+               long a = in.nextLong();  
+  
+               long res=0L,j=0;  
+  
+               long n = a%3;  
+  
+                 
+  
+              if (n==0) {  
+  
+                   res=a/3-1;  
+  
+                    
+  
+               } else  {  
+  
+                    
+  
+                   res=(a-n)*2/3;  
+  
+                    
+  
+               }  
+  
+                  
+  
+                System.out.println(res);  
+  
+            
+  
+       }  
+  
+   }  
+   
