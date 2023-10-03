@@ -172,4 +172,71 @@ public class Main {
        }  
   
    }  
-   
+
+
+   import java.math.BigInteger;
+ import java.util.Scanner;
+ 
+ // 注意类名必须为 Main, 不要有任何 package xxx 信息
+ public class Main {
+     private final static int mod = (int) Math.pow(10, 9) + 7;;
+     public static void main(String[] args) {
+         Scanner in = new Scanner(System.in);
+         // 注意 hasNext 和 hasNextLine 的区别
+         long count = 0;
+         int n = in.nextInt();
+         int k = in.nextInt();
+         int index = 0;
+         long num[] = new long[n];
+         int len = 0;
+ 
+          int opx[] = new int[k]; 
+ 
+          // 初始化数据 记录操作数组 转换为正负操作
+ 
+         while (in.hasNextInt()) { 
+             if (index < n) {
+                 num[index++] = in.nextInt();
+             } else {
+                 int b = in.nextInt();
+                 if (b == 1) {
+                     opx[len] = in.nextInt();
+                 } else {
+                     opx[len] = -in.nextInt();
+                 }
+                 len++;
+             }
+         }
+         long add = 0;
+         long sub = 0;
+ 
+          long current = 0; 
+ 
+          //统一对操作数组进行替换  对于一个数 如果 前面的操作大于0 则可以把前面那一步操作和后面的操作加起来 ，按这个推 ，最后一定只剩下 一次减 和一次加 
+         for (int i = 0; i < opx.length; i++) {
+             current = (current + opx[i]);
+             if (opx[i] < -current) {
+                 if (current < 0) {
+                     sub = (sub + current);
+                     current = 0;
+                 }
+             }
+             add = current;
+ 
+          } 
+ 
+          //遍历数组 如果这个数比总的减去的值还大 那么不为0 所以加起来，如果小于那么肯定为0直接等于最后操作的正数 
+         for (int i = 0; i < n; i++) {
+             if (num[i] > -sub) {
+                 num[i] = num[i]+add+sub ;
+             } else {
+                 num[i] = add;
+             }
+             count = (count + num[i]) % mod;
+         }
+         System.out.println(count);
+     }
+ 
+ }
+
+
