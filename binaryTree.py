@@ -138,3 +138,15 @@ class Solution:
                     res += dfs(i) * dfs(idx[v//x])
             return res
         return sum(dfs(x) for x in range(len(arr))) % (10** 9 + 7)
+
+
+# 2571 minimum-operations-to-reduce-an-integer-to-0
+
+class Solution:
+    def minOperations(self, n: int) -> int:
+        def dfs(i):
+            if i & (i - 1) == 0:
+                return 1
+            low = i & (-i)
+            return min(dfs(i + low), dfs(i - low)) + 1
+        return dfs(n)

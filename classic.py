@@ -384,3 +384,44 @@ class Solution:
                     q.append(cur.right)
             cnt *= 2
         return ans
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        ans = 0
+       
+        for i in range(32):
+            cnt = sum([ (n >> i) & 1 for n in nums])
+            if cnt % 3:
+                if i == 31:
+                    ans -= (1 << i)
+                else:
+                    ans |= (1 << i)
+        return ans
+        
+class Solution:
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        neighb = [[-1, -1], [-1, 0], [-1, 1], [0,-1],[0, 1], [1, -1], [1, 0], [1, 1]]
+
+        m = len(board)
+        n = len(board[0])
+        for i in range(m):
+          for j in range(n):
+            cnt = 0
+            for dx, dy in neighb:
+              if i + dx >= 0 and i + dx < m and j + dy >= 0 and j + dy < n:
+                if board[i + dx][j + dy] == 1 or board[i + dx][j + dy] == 3:
+                  cnt += 1
+            if board[i][j] == 1 and (cnt < 2 or cnt > 3):
+              board[i][j] = 3
+            if board[i][j] == 0 and cnt == 3:
+              board[i][j] = 2
+        for i in range(m):
+            for j in range(n):
+              if board[i][j] == 3:
+                board[i][j] = 0
+              if board[i][j] == 2:
+                board[i][j] = 1
+          
