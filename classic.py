@@ -424,4 +424,86 @@ class Solution:
                 board[i][j] = 0
               if board[i][j] == 2:
                 board[i][j] = 1
-          
+    
+# sort colors          
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        left = 0
+        right = 0
+        while right < n:
+            if nums[right] == 0 and nums[left] != 0:
+                nums[right], nums[left] = nums[left], nums[right]
+                left += 1
+            elif nums[left] == 0:
+                left += 1
+            right += 1 
+        
+        right = left
+        while right < n:
+            if nums[right] == 1 and nums[left] != 1:
+                nums[right], nums[left] = nums[left], nums[right]
+                left += 1
+            elif nums[left] == 1:
+                left += 1
+            right += 1 
+        
+# 287 find the duplicate number
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        #n = len(nums) - 1
+        '''ans = 0
+        for i, n in enumerate(nums):
+            ans ^= i
+            ans ^= n
+        return ans 
+        '''
+
+        slow = 0
+        fast = 0
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        while  slow != fast:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+        slow = 0
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+        return slow
+
+# move zeros
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        left = 0
+        for i,x in enumerate(nums):
+            if x != 0:
+                nums[left] = x
+                left += 1
+        for i in range(left, n):
+            nums[i] = 0
+        
+# 3 longest substring without repeating characters
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
+        left = 0
+        ans = 0
+        cnt = Counter()
+        for i in range(n):
+            cnt[s[i]] += 1
+            while cnt[s[i]] > 1:
+                cnt[s[left]] -= 1
+                if cnt[s[left]] == 0:
+                    del cnt[s[left]]
+                left += 1
+            ans = max(ans, i - left + 1)
+
+        return ans
