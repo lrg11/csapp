@@ -507,3 +507,19 @@ class Solution:
             ans = max(ans, i - left + 1)
 
         return ans
+
+
+# 42 trapping rain water
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        st = []
+        ans = 0
+        for i, x in enumerate(height):
+            while st and height[st[-1]] <= x:
+                cur = st.pop()
+                if not st:
+                    continue
+                ans += (min(x, height[st[-1]]) - height[cur]) * (i - st[-1] - 1)
+            st.append(i)
+        return ans
