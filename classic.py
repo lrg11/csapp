@@ -523,3 +523,63 @@ class Solution:
                 ans += (min(x, height[st[-1]]) - height[cur]) * (i - st[-1] - 1)
             st.append(i)
         return ans
+
+# 560 subarray sum equals k
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        '''
+        @cache
+        def dfs(j, k):
+            if j == 0:
+                return 1 if k == nums[j] else -inf
+            if k == nums[j]:
+                return max(dfs(j - 1, k - nums[j]) + 1, 1)
+            return max(dfs(j - 1, k - nums[j]), 0) 
+        return sum(max(dfs(i, k), 0) for i in range(len(nums)))
+        '''
+        n = len(nums)
+        pre_sum = [0]* (n + 1)
+        for i in range(1, n + 1):
+            pre_sum[i] = pre_sum[i - 1] + nums[i - 1]
+
+        ans = 0
+        for i in range(n):
+            for j in range(i, n):
+                if pre_sum[j + 1] - pre_sum[j] == k:
+                    ans += 1
+
+
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+    
+        n = len(nums)
+        pre_sum = [0]* (n + 1)
+        for i in range(1, n + 1):
+            pre_sum[i] = pre_sum[i - 1] + nums[i - 1]
+
+        ans = 0
+        dd = defaultdict(int)
+        dd[0] = 1
+        for i in range(n):
+            ans += dd[pre_sum[i + 1] - k]
+            dd[pre_sum[i + 1]] += 1
+        return ans
+
+# 53 maximum subarray
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+
+        @cache
+        def dfs(j):
+            if j < 0:
+                return 0
+            return max(nums[j], dfs(j - 1) + nums[j])
+
+        n = len(nums)
+        dp = [0] * (n + 1)
+        ans = -inf
+        for i in range(n):
+            dp[i + 1] = max(nums[i], nums[i] + dp[i])
+            ans = max(ans, dp[i + 1])
+        
+        return ans
