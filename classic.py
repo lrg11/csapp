@@ -583,3 +583,27 @@ class Solution:
             ans = max(ans, dp[i + 1])
         
         return ans
+
+# 239 sliding window maximum
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        st = deque()
+        ans = []
+        n = len(nums)
+        if k >= n:
+            return [max(nums)]
+        for i in range(k):
+            while st and nums[i] > st[-1]:
+                st.pop()
+            st.append(nums[i]) 
+        ans.append(st[0])
+        for i in range(k, n):
+            if nums[i - k] == st[0]:
+                st.popleft()
+            while st and nums[i] > st[-1]:
+                st.pop()
+            st.append(nums[i])
+            ans.append(st[0])
+        return ans
+
