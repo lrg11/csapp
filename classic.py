@@ -607,3 +607,100 @@ class Solution:
             ans.append(st[0])
         return ans
 
+
+# reverse nodes in k group
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param head ListNode类 
+# @param k int整型 
+# @return ListNode类
+#
+class Solution:
+    def reverseKGroup(self , head: ListNode, k: int) -> ListNode:
+        # write code here
+        cnt = 0
+        cur = head
+        while cur:
+            cnt += 1
+            cur = cur.next
+        if cnt < k:
+            return head
+        dumy = ListNode(-1)
+        dumy.next = head
+        p0 = dumy
+        cur = head 
+        pre = None
+        while cnt >= k:
+            cnt -= k 
+            for _ in range(k):
+                tmp = cur.next
+                cur.next = pre
+                pre = cur
+                cur = tmp
+            tmp = p0.next
+            tmp.next = cur
+            p0.next = pre
+            p0 = tmp
+            pre = None
+            
+        '''
+        if p0:
+            p0.next = cur
+        '''
+            
+
+        return dumy.next
+
+
+# 
+a = input()
+b = input()
+
+m = len(a)
+n = len(b)
+
+#dp = [[0]*(n + 1) for _ in range(m + 1)]
+
+maxi = -1
+
+maxn = 0
+len = 0
+i = 0
+j = n - 1
+while i < m:
+    row = i
+    col = j
+    len = 0
+    while row < m and col < n:
+        if a[row] == b[col]:
+            len+= 1
+        else:
+            if len > maxn:
+                maxn = len
+                maxi = row
+            len = 0
+        row+= 1
+        col+= 1
+        
+    if j > 0:
+        j -= 1
+    else:
+        i+= 1
+
+               
+
+if max == -1:
+    print(-1)
+else:
+    str = a[maxi - maxn: maxi]
+    print(str)
+
+
+
+        
