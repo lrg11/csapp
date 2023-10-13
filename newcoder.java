@@ -258,3 +258,24 @@ class Solution {
         reverse(nums, newk, n - 1);
     }
 }
+
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int []suf_mul = new int[n + 1];
+        suf_mul[n] = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            suf_mul[i] = suf_mul[i + 1] * nums[i];
+        }
+
+        int pre = 1;
+        int[] ans = new int[n];
+        for(int i = 0; i < n; i++){
+            ans[i] = pre * suf_mul[i + 1];
+            pre *= nums[i];
+        }
+        return ans;
+
+    }
+}
