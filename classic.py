@@ -794,3 +794,39 @@ class Solution:
     def solve(self , s: str, t: str) -> str:
         # write code here
         return str(int(s) + int(t))
+
+
+# sortByScore
+
+/*
+题目： 
+班里有 m 位学生，共计划组织 n 场考试。给你一个下标从 0 开始、大小为 m x n 的整数矩阵 score ，
+其中每一行对应一位学生，而 score[i][j] 表示第 i 位学生在第 j 场考试取得的分数。矩阵 score 包含的整数 互不相同 。
+另给你一个整数 k 。请你按第 k 场考试分数从高到低完成对这些学生（矩阵中的行）的排序。
+返回排序后的矩阵。
+
+例1:
+输入：score = [[10,6,9,1],[7,5,11,2],[4,8,3,15]], k = 2
+输出：[[7,5,11,2],[10,6,9,1],[4,8,3,15]]
+例2:
+输入：score = [[3,4],[5,6]], k = 0
+输出：[[5,6],[3,4]]
+
+*/
+
+def sortbyScore(score, k):
+    col = len(score)
+    scorecol = []
+    for i, row in enumerate(score):
+        scorecol.append([row[k],i])
+    scorecol.sort(reverse=True)
+    ans = []
+    for i, rownum in enumerate(scorecol):
+        ans.append(score[rownum[1]])
+    return ans
+
+score= [[10,6,9,1],[7,5,11,2],[4,8,3,15]]
+
+k = 2
+
+print(sortbyScore(score, k))
